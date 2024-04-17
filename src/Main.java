@@ -186,6 +186,10 @@ public class Main {
     private static void displayShortestPath(ArrayList<City> cities, int[] parentIds, int start, int end) {
         System.out.println("Shortest path from " + cities.get(start).cityName + " to " + cities.get(end).cityName + ":");
 
+        double totalDistance = 0.0;
+        StringBuilder pathBuilder = new StringBuilder();
+
+        // Build the path from end city to start city (in reverse order)
         ArrayList<City> path = new ArrayList<>();
         int current = end;
 
@@ -198,6 +202,25 @@ public class Main {
             path.add(cities.get(start));
             Collections.reverse(path);
 
+            // Construct the detailed path string and calculate total distance
+            for (int i = 0; i < path.size(); i++) {
+                City city = path.get(i);
+                pathBuilder.append(city.cityName);
+                if (i < path.size() - 1) {
+                    pathBuilder.append(" -> ");
+                }
+
+                if (i > 0) {
+                    // Calculate distance between consecutive cities in the path
+                    City prevCity = path.get(i - 1);
+                    double distance = calculateDistance(city, prevCity);
+                    totalDistance += distance;
+                }
+            }
+
+            // Output the formatted result
+            System.out.println("Total Distance: " + String.format("%.2f", totalDistance) + ". Path: " + pathBuilder);
+
             // Draw the path on StdDraw canvas
             StdDraw.setPenColor(new Color(30, 144, 255)); // Slightly brighter blue than regular StdDraw.BLUE
             StdDraw.setPenRadius(0.01);
@@ -208,11 +231,12 @@ public class Main {
                 StdDraw.line(currentCity.x, currentCity.y, nextCity.x, nextCity.y);
             }
 
-            for (City city : path) {
-                System.out.println(city.cityName);
-            }
         } else {
             System.out.println("No path found.");
         }
+    }
+
+    private static double calculateDistance(City city1, City city2) {
+        return Math.sqrt(Math.pow(city2.x - city1.x, 2) + Math.pow(city2.y - city1.y, 2));
     }
 }
