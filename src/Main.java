@@ -28,7 +28,6 @@ public class Main {
         String connectionsFilePath = "src/input/city_connections.txt";
         ArrayList<Road> roads = retrieveRoads(connectionsFilePath, cities, graph);
 
-
         for (City city : cities) {
             StdDraw.filledCircle(city.x, city.y, 5.0);
             StdDraw.text(city.x, city.y - 25.0, city.cityName, 10.0);
