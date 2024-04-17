@@ -135,16 +135,6 @@ public class Main {
         return roads;
     }
 
-    public static void printIntArray(int[] array) {
-        System.out.print("[");
-        for (int i = 0; i < array.length; i++) {
-            System.out.print(array[i]);
-            if (i < array.length - 1) {
-                System.out.print(", ");
-            }
-        }
-        System.out.println("]");
-    }
     public static void dijkstra(double[][] graph, ArrayList<City> cities, int start, int end) {
         int numCities = graph.length;
         boolean[] visited = new boolean[numCities];
@@ -207,6 +197,17 @@ public class Main {
         if (current == start) {
             path.add(cities.get(start));
             Collections.reverse(path);
+
+            // Draw the path on StdDraw canvas
+            StdDraw.setPenColor(new Color(30, 144, 255)); // Slightly brighter blue than regular StdDraw.BLUE
+            StdDraw.setPenRadius(0.01);
+
+            for (int i = 0; i < path.size() - 1; i++) {
+                City currentCity = path.get(i);
+                City nextCity = path.get(i + 1);
+                StdDraw.line(currentCity.x, currentCity.y, nextCity.x, nextCity.y);
+            }
+
             for (City city : path) {
                 System.out.println(city.cityName);
             }
