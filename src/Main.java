@@ -21,8 +21,8 @@ public class Main {
         // Load city coordinates and connections from files
         String coordinatesFilePath = "src/input/city_coordinates.txt";
         ArrayList<City> cities = retrieveCities(coordinatesFilePath);
-        int citiesSize = cities.size();
 
+        int citiesSize = cities.size();
         double[][] graph = new double[citiesSize][citiesSize];
 
         String connectionsFilePath = "src/input/city_connections.txt";
@@ -32,16 +32,11 @@ public class Main {
         for (City city : cities) {
             StdDraw.filledCircle(city.x, city.y, 5.0);
             StdDraw.text(city.x, city.y - 25.0, city.cityName, 10.0);
-//            System.out.println(city.id + " " + city.cityName + " - X: " + city.x + " - Y: " + city.y);
         }
 
         for (Road road : roads) {
             City to = road.to();
             City from = road.from();
-//            System.out.println("Index: " + roads.indexOf(road));
-//            System.out.println("To: " + to.cityName);
-//            System.out.println("From: " + from.cityName);
-//            System.out.println("\n");
             StdDraw.line(from.x, from.y, to.x, to.y);
         }
         StdDraw.show();
