@@ -42,27 +42,38 @@ public class Main {
 
         // Prompt for start and end cities
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter start city: ");
-        String startCityName = scanner.nextLine().trim();
-        System.out.print("Enter end city: ");
-        String endCityName = scanner.nextLine().trim();
+        while (true) {
+            System.out.print("Enter start city: ");
+            String startCityName = scanner.nextLine().trim();
+            System.out.print("Enter end city: ");
+            String endCityName = scanner.nextLine().trim();
 
-        // Find indices of start and end cities
-        int start = -1, end = -1;
-        for (City city : cities) {
-            if (city.cityName.equalsIgnoreCase(startCityName)) {
-                start = city.id;
+            // Find indices of start and end cities
+            int start = -1, end = -1;
+            for (City city : cities) {
+                if (city.cityName.equalsIgnoreCase(startCityName)) {
+                    start = city.id;
+                }
+                if (city.cityName.equalsIgnoreCase(endCityName)) {
+                    end = city.id;
+                }
             }
-            if (city.cityName.equalsIgnoreCase(endCityName)) {
-                end = city.id;
+
+            if (start != -1 && end != -1) {
+                dijkstra(graph, cities, start, end);
+            } else {
+                System.out.println("City not found");
+            }
+
+            System.out.println("Do you want to find another path? (yes/no)");
+            String continueInput = scanner.nextLine().trim().toLowerCase();
+            if (!continueInput.equals("yes")) {
+                System.out.println("Exiting program...");;
+                break;
             }
         }
 
-        if (start != -1 && end != -1) {
-            dijkstra(graph, cities, start, end);
-        } else {
-            System.out.println("City not found");
-        }
+        scanner.close();
     }
 
     public static ArrayList<City> retrieveCities(String path) {
