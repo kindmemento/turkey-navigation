@@ -3,7 +3,6 @@ public class City {
     public String cityName;
     public int x;
     public int y;
-    public boolean isVisited = false;
 
     public City(int id, String cityName, int x, int y) {
         this.id = id;
