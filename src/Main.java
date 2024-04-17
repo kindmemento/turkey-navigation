@@ -16,7 +16,7 @@ public class Main {
         StdDraw.setXscale(0, width);
         StdDraw.setYscale(0, height);
 
-        StdDraw.picture(width / 2, height / 2, "src/map/map.png", width, height);
+        StdDraw.picture((double) width / 2, (double) height / 2, "src/map/map.png", width, height);
 
         // Load city coordinates and connections from files
         String coordinatesFilePath = "src/input/city_coordinates.txt";
