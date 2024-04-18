@@ -43,10 +43,9 @@ public class Main {
         // Prompt for start and end cities
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            System.out.print("Enter start city: ");
-            String startCityName = scanner.nextLine().trim();
-            System.out.print("Enter end city: ");
-            String endCityName = scanner.nextLine().trim();
+            System.out.print("\n");
+            String startCityName = promptForValidCityName(scanner, "Enter start city: ", cities);
+            String endCityName = promptForValidCityName(scanner, "Enter destination city: ", cities);
 
             // Find indices of start and end cities
             int start = -1, end = -1;
@@ -65,7 +64,7 @@ public class Main {
                 System.out.println("City not found");
             }
 
-            System.out.println("Do you want to find another path? (yes/no)");
+            System.out.println("\nDo you want to find another path? (yes/no)");
             String continueInput = scanner.nextLine().trim().toLowerCase();
             if (!continueInput.equals("yes")) {
                 System.out.println("Exiting program...");;
@@ -189,8 +188,6 @@ public class Main {
     }
 
     private static void displayShortestPath(ArrayList<City> cities, int[] parentIds, int start, int end) {
-        System.out.println("Shortest path from " + cities.get(start).cityName + " to " + cities.get(end).cityName + ":");
-
         double totalDistance = 0.0;
         StringBuilder pathBuilder = new StringBuilder();
 
@@ -237,11 +234,32 @@ public class Main {
             }
 
         } else {
-            System.out.println("No path found.");
+            System.out.println("No path could be found.");
         }
     }
 
     private static double calculateDistance(City city1, City city2) {
         return Math.sqrt(Math.pow(city2.x - city1.x, 2) + Math.pow(city2.y - city1.y, 2));
+    }
+
+    private static String promptForValidCityName(Scanner scanner, String message, ArrayList<City> cities) {
+        while (true) {
+            System.out.print(message);
+            String cityName = scanner.nextLine().trim();
+            if (isValidCityName(cityName, cities)) {
+                return cityName;
+            } else {
+                System.out.println("City named '" + cityName + "' not found. Please enter a valid city name.");
+            }
+        }
+    }
+
+    private static boolean isValidCityName(String cityName, ArrayList<City> cities) {
+        for (City city : cities) {
+            if (city.cityName.equalsIgnoreCase(cityName)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
